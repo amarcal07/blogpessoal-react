@@ -3,6 +3,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import { Grid, Box, Typography } from '@material-ui/core';
 
+import "./Footer.css";
+
 function Footer (){
     return (
         <>
