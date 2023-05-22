@@ -26,7 +26,6 @@ function Carrossel() {
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
-
                 <SwiperSlide>
                     <img src="https://i.imgur.com/EYLPjQm.jpg" alt="Imagem" />
                 </SwiperSlide>
