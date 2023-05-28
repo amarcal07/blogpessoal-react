@@ -10,7 +10,7 @@ import Login from './paginas/login/Login';
 import './App.css'
 import CadastroUsuario from './paginas/cadastroUsuario/CadastroUsuario';
 import ListaPostagem from './components/postagens/listapostagem/ListaPostagem';
-import ListaTema from './components/temas/ListaTema';
+import ListaTema from './components/temas/listatema/ListaTema';
 
 function App() {
   return (
