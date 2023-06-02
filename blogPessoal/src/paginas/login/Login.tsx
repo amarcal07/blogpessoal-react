@@ -1,51 +1,84 @@
-﻿import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Grid, Typography, TextField, Button } from '@material-ui/core';
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import { Box } from '@mui/material';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
-import { login } from '../../services/Service';
-import './Login.css';
+import { toast } from 'react-toastify';
 import UserLogin from '../../models/UserLogin';
+import { login } from '../../services/Service';
+import { addId, addToken } from '../../store/token/Actions';
+import './Login.css';
 
+// use pode ser lido HOok
 function Login() {
+   
+    let navigate = useNavigate();
 
-    let history = useNavigate();
-    const [token, setToken] = useLocalStorage('token');
+    const dispatch = useDispatch();
 
-    const [userLogin, setUserLogin] = useState<UserLogin>(
-        {
-            id: 0,
-            usuario: '',
-            senha: '',
-            token: ''
-        }
-    )
+    const [token, setToken] = useState('');
+    const [userLogin, setUserLogin] = useState<UserLogin>({
 
-    function updateModel(e: ChangeEvent<HTMLInputElement>) {
+        id: 0,
+        nome: "",
+        usuario: '',
+        // foto: "",
+        senha: '',
+        token: ''
+    })
 
+    // const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
+
+    //     id: 0,
+    //     nome: "",
+    //     usuario: '',
+    //     foto: "",
+    //     senha: '',
+    //     token: ''
+    // })
+
+    function updatedModel(e: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
             ...userLogin,
             [e.target.name]: e.target.value
         })
+        console.log(Object.values(userLogin))
     }
 
-    useEffect(()=> {
+    useEffect(()=>{
         if(token != ''){
-            history('/home')
+            dispatch(addToken(token));
+            navigate('/home')
         }
     }, [token])
-
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
-            await login(`/usuarios/logar`, userLogin, setToken)
-
-            alert('Usuário logado com sucesso!')
-        } catch(error){
-            alert('Dados do usuário inconsistentes, Erro ao logar!');
+         
+            await login('/usuarios/logar', userLogin, setToken)
+            toast.success('Login efetuado com sucesso!', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: 'colored',
+                progress: undefined,
+            });
+        } catch (error) {
+   
+            toast.error('Erro ao efetuar login! Verifique os dados do Usuário!', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: 'colored',
+                progress: undefined,
+            });
         }
-
-        // console.log('userLogin: ' + Object.values(userLogin));
     }
 
     return (
@@ -53,39 +86,30 @@ function Login() {
             <Grid alignItems='center' xs={6}>
                 <Box paddingX={20}>
                     <form onSubmit={onSubmit}>
-
-                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos1'>
-                            Entrar
-                        </Typography>
-
-                        <TextField value={userLogin.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)} id='usuario' label='usuário' variant='outlined' name='usuario' margin='normal' fullWidth />
-
-                        <TextField value={userLogin.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
-
+                        <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos1'>Entrar</Typography>
+                        <TextField value={userLogin.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='usuario' label='usuário' variant='outlined' name='usuario' margin='normal' fullWidth />
+                        <TextField value={userLogin.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
                         <Box marginTop={2} textAlign='center'>
                             <Button type='submit' variant='contained' color='primary'>
-                                Logar
+                                Entrar
                             </Button>
                         </Box>
                     </form>
-
                     <Box display='flex' justifyContent='center' marginTop={2}>
                         <Box marginRight={1}>
                             <Typography variant='subtitle1' gutterBottom align='center'>Não tem uma conta?</Typography>
                         </Box>
-
-                        <Link to="/cadastro">
+                        <Link to='/cadastrousuario'>
                             <Typography variant='subtitle1' gutterBottom align='center' className='textos1'>Cadastre-se</Typography>
                         </Link>
-
                     </Box>
                 </Box>
             </Grid>
-
-            <Grid className='imagem'></Grid>
-
+            <Grid xs={6} className='imagem'>
+                
+            </Grid>
         </Grid>
-    )
+    );
 }
 
 export default Login;
