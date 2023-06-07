@@ -83,7 +83,7 @@ function CadastroPost() {
 
     async function getTemas() {
         try {
-            await busca('/temas', setTemas, {
+            await busca('/tema', setTemas, {
                 headers: {
                     'Authorization': token
                 }
@@ -188,7 +188,7 @@ function CadastroPost() {
     }
 
     function back() {
-        navigate('/posts')
+        navigate('/postagens')
     }
 
     return (
@@ -203,7 +203,7 @@ function CadastroPost() {
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        onChange={(e) => buscaId(`/temas/${e.target.value}`, setTema, {
+                        onChange={(e) => buscaId(`/tema/${e.target.value}`, setTema, {
                             headers: {
                                 'Authorization': token
                             }

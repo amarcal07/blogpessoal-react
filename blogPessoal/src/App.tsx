@@ -14,7 +14,6 @@ import Home from './paginas/home/Home';
 import Login from './paginas/login/Login';
 import Perfil from './paginas/perfil/Perfil';
 import store from './store/Store';
-
 import 'react-toastify/dist/ReactToastify.css';
 import AtualizarUsuario from './components/usuarios/atualizarusuario/AtualizarUsuario';
 import ListaPostagemPorTitulo from './components/postagens/listapostagemportitulo/ListaPostagemPorTitulo';

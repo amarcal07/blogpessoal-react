@@ -8,14 +8,11 @@ import { busca } from '../../../services/Service';
 import { UserState } from '../../../store/token/Reducer';
 import './ListaTema.css';
 import { toast } from 'react-toastify';
-import { addToken } from '../../../store/token/Actions';
+import { Action, addToken } from '../../../store/token/Actions';
 
 function ListaTema() {
-
   const [temas, setTemas] = useState<Tema[]>([])
-
-  const dispatch = useDispatch()
-
+  
   const token = useSelector<UserState, UserState["tokens"]>(
     (state) => state.tokens
   )
@@ -39,10 +36,10 @@ function ListaTema() {
   }, [token])
 
 
-  async function getTema() {
 
+  async function getTema() {
     try {
-      await busca("/temas", setTemas, {
+      await busca("/tema", setTemas, {
         headers: {
           'Authorization': token
         }
@@ -54,15 +51,15 @@ function ListaTema() {
     }
   }
 
-
-  useEffect(() => {
+  useEffect(()=>{
     getTema()
   }, [temas.length])
+
 
   return (
     <>
       {temas.length === 0 ? (<div className="spinner"></div>) : (
-        temas.map((tema) => (
+        temas.map((temas) => (
           <Box marginX={20} m={2}>
             <Card variant="outlined">
               <CardContent>
@@ -70,20 +67,20 @@ function ListaTema() {
                   Descrição:
                 </Typography>
                 <Typography variant="h5" component="h2">
-                  {tema.descricao}
+                  {temas.descricao}
                 </Typography>
               </CardContent>
               <CardActions>
                 <Box display="flex" justifyContent="center" mb={1.5} >
 
-                  <Link to={`/formularioTema/${tema.id}`} className="text-decorator-none">
+                  <Link to={`/formularioTema/${temas.id}`} className="text-decorator-none">
                     <Box mx={1}>
                       <Button variant="contained" className="marginLeft" size='small' color="primary" >
                         atualizar
                       </Button>
                     </Box>
                   </Link>
-                  <Link to={`/deletarTema/${tema.id}`} className="text-decorator-none">
+                  <Link to={`/deletarTema/${temas.id}`} className="text-decorator-none">
                     <Box mx={1}>
                       <Button variant="contained" size='small' color="secondary">
                         deletar
@@ -102,3 +99,7 @@ function ListaTema() {
 
 
 export default ListaTema;
+
+function dispatch(arg0: Action) {
+  throw new Error('Function not implemented.');
+}

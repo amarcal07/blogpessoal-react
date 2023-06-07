@@ -110,7 +110,7 @@ function CadastroTema() {
             }
         } else {
             try {
-                await post(`/temas`, tema, setTema, {
+                await post(`/tema`, tema, setTema, {
                     headers: {
                         'Authorization': token
                     }

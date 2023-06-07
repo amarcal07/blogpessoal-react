@@ -9,33 +9,31 @@ import { login } from '../../services/Service';
 import { addId, addToken } from '../../store/token/Actions';
 import './Login.css';
 
-// use pode ser lido HOok
 function Login() {
    
     let navigate = useNavigate();
 
     const dispatch = useDispatch();
 
-    const [token, setToken] = useState('');
     const [userLogin, setUserLogin] = useState<UserLogin>({
 
         id: 0,
         nome: "",
         usuario: '',
-        // foto: "",
+        foto: "",
         senha: '',
         token: ''
     })
 
-    // const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
+    const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
 
-    //     id: 0,
-    //     nome: "",
-    //     usuario: '',
-    //     foto: "",
-    //     senha: '',
-    //     token: ''
-    // })
+        id: 0,
+        nome: "",
+        usuario: '',
+        foto: "",
+        senha: '',
+        token: ''
+    })
 
     function updatedModel(e: ChangeEvent<HTMLInputElement>) {
         setUserLogin({
@@ -45,17 +43,23 @@ function Login() {
         console.log(Object.values(userLogin))
     }
 
-    useEffect(()=>{
-        if(token != ''){
-            dispatch(addToken(token));
+    useEffect(() => {
+        if (respUserLogin.token !== "") {
+
+            console.log("Token: " + respUserLogin.token)
+            console.log("ID: " + respUserLogin.id)
+
+            dispatch(addToken(respUserLogin.token))
+            dispatch(addId(respUserLogin.id.toString()))    
             navigate('/home')
         }
-    }, [token])
+    }, [respUserLogin.token])
+
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
          
-            await login('/usuarios/logar', userLogin, setToken)
+            await login('/usuarios/logar', userLogin, setRespUserLogin)
             toast.success('Login efetuado com sucesso!', {
                 position: 'top-right',
                 autoClose: 2000,

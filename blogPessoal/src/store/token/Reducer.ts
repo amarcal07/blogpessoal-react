@@ -1,4 +1,4 @@
-﻿export interface UserState {
+﻿﻿export interface UserState {
     tokens: string,
     id: string,
 }

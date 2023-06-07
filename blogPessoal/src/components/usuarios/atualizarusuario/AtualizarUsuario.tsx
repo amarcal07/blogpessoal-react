@@ -120,8 +120,8 @@ function AtualizarUsuario() {
                 theme: "colored",
                 progress: undefined,
             });
-            setUser({ ...user, senha: "" }) // Reinicia o campo de Senha
-            setConfirmarSenha("")           // Reinicia o campo de Confirmar Senha
+            setUser({ ...user, senha: "" }) 
+            setConfirmarSenha("")           
         }
 
         back()
@@ -129,8 +129,8 @@ function AtualizarUsuario() {
     }
 
     function back() {
-        setUser({ ...user, senha: "" }) // Reinicia o campo de Senha
-        setConfirmarSenha("")           // Reinicia o campo de Confirmar Senha
+        setUser({ ...user, senha: "" }) 
+        setConfirmarSenha("")           
         navigate('/perfil')
     }
 

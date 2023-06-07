@@ -2,7 +2,6 @@ import { Box, Button} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-
 import User from '../../models/User';
 import { buscaId } from '../../services/Service';
 import { addToken } from '../../store/token/Actions';
@@ -51,7 +50,6 @@ function Perfil() {
         }
     }, [token])
 
-    // Método para pegar os dados de um Usuário especifico pelo ID
     async function findById(id: string) {
         try {
             await buscaId(`/usuarios/${id}`, setUser, {
